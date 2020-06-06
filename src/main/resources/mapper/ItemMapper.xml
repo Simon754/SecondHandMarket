@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.market.dao.ItemMapper" >
+  <resultMap id="BaseResultMap" type="com.market.model.Item" >
+    <id column="itemID" property="itemid" jdbcType="INTEGER" />
+    <result column="itemName" property="itemname" jdbcType="VARCHAR" />
+    <result column="itemPrice" property="itemprice" jdbcType="VARCHAR" />
+    <result column="itemStatus" property="itemstatus" jdbcType="VARCHAR" />
+    <result column="itemInfo" property="iteminfo" jdbcType="VARCHAR" />
+    <result column="itemPic" property="itempic" jdbcType="VARCHAR" />
+    <result column="userID" property="userid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    itemID, itemName, itemPrice, itemStatus, itemInfo, itemPic, userID
+  </sql>
+  <select id="selectAll" resultMap="BaseResultMap" parameterType="java.lang.Void">
+    select * from item
+  </select>
+  <select id="selectOnline" resultMap="BaseResultMap" parameterType="java.lang.Void">
+    select * from item
+    where itemStatus = 2
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from item
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </select>
+  <select id="selectItemsByUserID" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from item
+    where userID = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from item
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.market.model.Item" >
+    insert into item (itemID, itemName, itemPrice, 
+      itemStatus, itemInfo, itemPic, 
+      userID)
+    values (#{itemid,jdbcType=INTEGER}, #{itemname,jdbcType=VARCHAR}, #{itemprice,jdbcType=VARCHAR}, 
+      #{itemstatus,jdbcType=VARCHAR}, #{iteminfo,jdbcType=VARCHAR}, #{itempic,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.market.model.Item" >
+    insert into item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        itemID,
+      </if>
+      <if test="itemname != null" >
+        itemName,
+      </if>
+      <if test="itemprice != null" >
+        itemPrice,
+      </if>
+      <if test="itemstatus != null" >
+        itemStatus,
+      </if>
+      <if test="iteminfo != null" >
+        itemInfo,
+      </if>
+      <if test="itempic != null" >
+        itemPic,
+      </if>
+      <if test="userid != null" >
+        userID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="itemid != null" >
+        #{itemid,jdbcType=INTEGER},
+      </if>
+      <if test="itemname != null" >
+        #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemprice != null" >
+        #{itemprice,jdbcType=VARCHAR},
+      </if>
+      <if test="itemstatus != null" >
+        #{itemstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="iteminfo != null" >
+        #{iteminfo,jdbcType=VARCHAR},
+      </if>
+      <if test="itempic != null" >
+        #{itempic,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.market.model.Item" >
+    update item
+    <set >
+      <if test="itemname != null" >
+        itemName = #{itemname,jdbcType=VARCHAR},
+      </if>
+      <if test="itemprice != null" >
+        itemPrice = #{itemprice,jdbcType=VARCHAR},
+      </if>
+      <if test="itemstatus != null" >
+        itemStatus = #{itemstatus,jdbcType=VARCHAR},
+      </if>
+      <if test="iteminfo != null" >
+        itemInfo = #{iteminfo,jdbcType=VARCHAR},
+      </if>
+      <if test="itempic != null" >
+        itemPic = #{itempic,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userID = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.market.model.Item" >
+    update item
+    set itemName = #{itemname,jdbcType=VARCHAR},
+      itemPrice = #{itemprice,jdbcType=VARCHAR},
+      itemStatus = #{itemstatus,jdbcType=VARCHAR},
+      itemInfo = #{iteminfo,jdbcType=VARCHAR},
+      itemPic = #{itempic,jdbcType=VARCHAR},
+      userID = #{userid,jdbcType=INTEGER}
+    where itemID = #{itemid,jdbcType=INTEGER}
+  </update>
+</mapper>
